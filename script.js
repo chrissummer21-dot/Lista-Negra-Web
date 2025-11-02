@@ -1,5 +1,5 @@
 // 1. PEGA AQUÍ LA URL DE TU APP SCRIPT
-const API_URL = "https://script.google.com/macros/s/AKfycbxoX58xGucHdzAkr0rNCEBHkT-tOOF6XsPxkfM0AoPbK_xnepwAjIRXKDJ1nw4S54X_/exec";
+const API_URL = "AKfycbxzxNAGSdbCC2bi9yqQl7LHhSNWojOX-tpC_W5aQvfpi9DX0ada2CrWShRzGSzir1EL";
 
 // 2. Referencias
 const searchInput = document.getElementById('searchInput');
@@ -11,16 +11,20 @@ function renderTable(players) {
     tableBody.innerHTML = "";
     
     if (players.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="2">No se encontraron resultados</td></tr>';
+        // CAMBIO AQUÍ: colspan="4"
+        tableBody.innerHTML = '<tr><td colspan="4">No se encontraron resultados</td></tr>';
         return;
     }
     
-    // Usamos displayName para "Usuario" y userId para "ID"
     players.forEach(player => {
         let row = document.createElement('tr');
+        // CAMBIO AQUÍ: Añadimos las 4 columnas
+        // Hacemos que el profile_url sea un enlace clickeable
         row.innerHTML = `
-            <td>${player.displayName}</td>
             <td>${player.userId}</td>
+            <td>${player.username}</td>
+            <td>${player.displayName}</td>
+            <td><a href="${player.profileUrl}" target="_blank">Ver perfil</a></td>
         `;
         tableBody.appendChild(row);
     });
@@ -31,14 +35,16 @@ function filterPlayers() {
     const searchTerm = searchInput.value.toLowerCase();
     
     const filteredPlayers = allPlayers.filter(player => {
-        // Busca en displayName, username Y userId
-        const disp = String(player.displayName).toLowerCase();
-        const user = String(player.username).toLowerCase();
+        // Busca en todos los campos
         const id = String(player.userId).toLowerCase();
+        const user = String(player.username).toLowerCase();
+        const disp = String(player.displayName).toLowerCase();
+        const url = String(player.profileUrl).toLowerCase();
         
-        return disp.includes(searchTerm) || 
+        return id.includes(searchTerm) || 
                user.includes(searchTerm) ||
-               id.includes(searchTerm);
+               disp.includes(searchTerm) ||
+               url.includes(searchTerm); // CAMBIO AQUÍ
     });
     
     renderTable(filteredPlayers);
@@ -46,24 +52,23 @@ function filterPlayers() {
 
 // 5. Función principal para cargar los datos (actualizada)
 async function loadPlayers() {
-    tableBody.innerHTML = '<tr><td colspan="2">Cargando lista...</td></tr>';
+    // CAMBIO AQUÍ: colspan="4"
+    tableBody.innerHTML = '<tr><td colspan="4">Cargando lista...</td></tr>';
     
     try {
         const response = await fetch(API_URL);
         allPlayers = await response.json(); 
         
-        // Manejar si el API nos devuelve un error
         if (allPlayers.error) {
             console.error("Error desde la API de Google:", allPlayers.error);
-            tableBody.innerHTML = '<tr><td colspan="2">Error en el script de Google.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="4">Error en el script de Google.</td></tr>';
         } else {
             renderTable(allPlayers);
         }
 
     } catch (error) {
-        // Este es el error de red/CORS
         console.error("Error al cargar los jugadores:", error);
-        tableBody.innerHTML = '<tr><td colspan="2">Error al cargar la lista. Revisa la consola.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="4">Error al cargar la lista. Revisa la consola.</td></tr>';
     }
 }
 
