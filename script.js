@@ -1,5 +1,5 @@
 // 1. PEGA AQUÍ LA URL DE TU APP SCRIPT
-const API_URL = "AKfycbxzxNAGSdbCC2bi9yqQl7LHhSNWojOX-tpC_W5aQvfpi9DX0ada2CrWShRzGSzir1EL";
+const API_URL = "https://script.google.com/macros/s/AKfycbxzxNAGSdbCC2bi9yqQl7LHhSNWojOX-tpC_W5aQvfpi9DX0ada2CrWShRzGSzir1EL/exec";
 
 // 2. Referencias
 const searchInput = document.getElementById('searchInput');
