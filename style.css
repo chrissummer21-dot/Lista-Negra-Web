@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+.container {
+    width: 80%;
+    max-width: 800px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+h1 {
+    text-align: center;
+}
+#searchInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+tbody tr:hover {
+    background-color: #f9f9f9;
+}
